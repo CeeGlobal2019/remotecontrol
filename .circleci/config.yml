@@ -38,7 +38,6 @@ jobs:
               --template-file template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
-      - destroy_environment
 
   smoke_test:
     docker:
@@ -48,7 +47,8 @@ jobs:
           name: Test job
           # Fail the job intentionally to simulate an error.
           command:  return 1
-      - destroy_environment       
+      - destroy_environment  
+          when: on_fail     
 #   python:3.7-alpine3.11
 # Sequential workflow
 workflows:
