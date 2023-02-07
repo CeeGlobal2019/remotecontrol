@@ -25,13 +25,13 @@ workflows:
     jobs:
       - create_infrastructure
       
-      configure_infrastructure: 
+  configure_infrastructure: 
     docker:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["ec:fe:1b:98:37:39:4b:0d:96:91:a1:08:75:e3:b0:22"] # You can get this ID in the section where you registered the SSH Key
+          fingerprints: ["c2:39:87:75:53:2d:1e:b6:ac:0c:c5:c4:9d:5b:d4:7c"] # You can get this ID in the section where you registered the SSH Key
       - run:
           name: Install dependencies
           command: |
