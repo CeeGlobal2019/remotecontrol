@@ -22,6 +22,7 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory main.yml
+#   python:3.7-alpine3.11
 # Sequential workflow
 workflows:
   # Name the workflow
