@@ -36,15 +36,6 @@ jobs:
       # Uncomment the line below if you want to fail the current step
       - run: return 1
       - destroy_environment
-
-  smoke_test:
-    docker:
-      - image: alpine:latest
-    steps:
-      - run:
-          name: Test job
-          # Fail the job intentionally to simulate an error.
-          command:  return 0
   
 #   python:3.7-alpine3.11
 # Sequential workflow
@@ -53,7 +44,3 @@ workflows:
   RemoteWorkflow:
     jobs:
       - create_infrastructure
-      - smoke_test:
-          requires:
-            - create_infrastructure
-      
