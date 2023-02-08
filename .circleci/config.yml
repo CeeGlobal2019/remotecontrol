@@ -8,6 +8,8 @@ orbs:
 commands:
   # Exercise - Rollback
   destroy_environment:
+    docker:
+      - image: amazon/aws-cli
     steps:
       - run:
           name: Destroy environment
@@ -43,7 +45,18 @@ jobs:
           name: Test job
           # Fail the job intentionally to simulate an error.
           command:  return 1
-      - destroy_environment     
+
+  destroy_environment:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - run:
+          name: Destroy environment
+          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
+          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}  
 #   python:3.7-alpine3.11
 # Sequential workflow
 workflows:
@@ -54,4 +67,7 @@ workflows:
       - smoke_test:
           requires:
             - create_infrastructure
+      - destroy_environment
+          requires:
+            - smoke_test
       
